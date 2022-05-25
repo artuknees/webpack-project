@@ -1,5 +1,6 @@
 const path = require('path'); // path ya es un elemento disponible en node asique lo pongo solo asi.
 // me da info del lugar donde estoy en general.
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = { // exportaremos las configuraciones
     entry: './src/index.js', // ese es el punto de entrada de la aplicacion
@@ -21,4 +22,11 @@ module.exports = { // exportaremos las configuraciones
             }
         ]
     },
+    plugins : [
+        new HtmlWebpackPlugin({
+            inject: true, // haga insercion de los elementos
+            template: './public/index.html', // cual es el template a usar
+            filename: './index.html' // toma nuestro template, lo transforma como decimos y lo va a llamar asi en dist.
+        })
+    ]
 }
