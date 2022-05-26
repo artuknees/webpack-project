@@ -1,6 +1,7 @@
 const path = require('path'); // path ya es un elemento disponible en node asique lo pongo solo asi.
 // me da info del lugar donde estoy en general.
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // llamo al recurso que isntale
 
 module.exports = { // exportaremos las configuraciones
     entry: './src/index.js', // ese es el punto de entrada de la aplicacion
@@ -19,6 +20,13 @@ module.exports = { // exportaremos las configuraciones
                 use: {
                     loader: 'babel-loader' // le digo que use babel-loader
                 }
+            },
+            {
+                test: /\.css|\.styl$/i, // expresion regular para usar css y stylus
+                use: [MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'stylus-loader'
+                ],
             }
         ]
     },
@@ -27,6 +35,7 @@ module.exports = { // exportaremos las configuraciones
             inject: true, // haga insercion de los elementos
             template: './public/index.html', // cual es el template a usar
             filename: './index.html' // toma nuestro template, lo transforma como decimos y lo va a llamar asi en dist.
-        })
+        }),
+        new MiniCssExtractPlugin(),
     ]
 }
