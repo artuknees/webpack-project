@@ -2,6 +2,8 @@ const path = require('path'); // path ya es un elemento disponible en node asiqu
 // me da info del lugar donde estoy en general.
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // llamo al recurso que isntale
+const CopyPlugin = require('copy-webpack-plugin'); // llamo al plugin para copiar
+
 
 module.exports = { // exportaremos las configuraciones
     entry: './src/index.js', // ese es el punto de entrada de la aplicacion
@@ -37,5 +39,13 @@ module.exports = { // exportaremos las configuraciones
             filename: './index.html' // toma nuestro template, lo transforma como decimos y lo va a llamar asi en dist.
         }),
         new MiniCssExtractPlugin(),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname,"src", "assets/images"),
+                    to: "assets/images" // manda a dist -> assets/images
+                } // en el objeto decimos desde donde y hacia donde se mueve.
+            ]
+        }), // armo la instancia del copiador
     ]
 }
