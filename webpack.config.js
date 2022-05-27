@@ -3,13 +3,16 @@ const path = require('path'); // path ya es un elemento disponible en node asiqu
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // llamo al recurso que isntale
 const CopyPlugin = require('copy-webpack-plugin'); // llamo al plugin para copiar
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 
 module.exports = { // exportaremos las configuraciones
     entry: './src/index.js', // ese es el punto de entrada de la aplicacion
     output: {
         path: path.resolve(__dirname,'dist'), // para saber donde se encuentra el proyecto
-        filename: 'main.js', // como se llama el archivo resultante
+        filename: '[name].[contenthash].js', // como se llama el archivo resultante
+        assetModuleFilename: 'assets/images/[hash][ext][query]' // para que mueva las imagenes donde quiero.
     }, // hacia donde enviamos lo que prepara webpack. tiene un nombre especifico para esto y es dist
     resolve: {
         extensions: ['.js'] // las extensiones con las que voy a trabajar
@@ -29,7 +32,33 @@ module.exports = { // exportaremos las configuraciones
                     'css-loader',
                     'stylus-loader'
                 ],
-            }
+            },
+            {
+                test: /\.png/,
+                type: 'asset/resource'
+            },
+            {
+                test: /\.(woff|woff2)$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        mimetype: "application/font-woff",
+                        name: "[name].[contenthash].[ext]",
+                        outputPath: "./assets/fonts/",
+                        publicPath: "./assets/fonts/",
+                        esModule: false,
+                    },
+                }
+            },
+            // Solucion extra para que no se carguen las fuentes como imagen
+            // {
+            //     test: /\.(woff|woff2|eot|ttf|otf)$/i,
+            //     type: "asset/resource",
+            //     generator: {
+            //       filename: "assets/fonts/[hash][ext]",
+            //     },
+            //   }
         ]
     },
     plugins : [
@@ -38,7 +67,9 @@ module.exports = { // exportaremos las configuraciones
             template: './public/index.html', // cual es el template a usar
             filename: './index.html' // toma nuestro template, lo transforma como decimos y lo va a llamar asi en dist.
         }),
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: 'assets/[name].[contenthash].css'
+        }),
         new CopyPlugin({
             patterns: [
                 {
@@ -47,5 +78,12 @@ module.exports = { // exportaremos las configuraciones
                 } // en el objeto decimos desde donde y hacia donde se mueve.
             ]
         }), // armo la instancia del copiador
-    ]
+    ],
+    optimization : {
+        minimize: true,
+        minimizer: [
+            new CssMinimizerPlugin(),
+            new TerserPlugin(),
+        ]
+    }
 }
