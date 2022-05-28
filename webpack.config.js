@@ -15,7 +15,13 @@ module.exports = { // exportaremos las configuraciones
         assetModuleFilename: 'assets/images/[hash][ext][query]' // para que mueva las imagenes donde quiero.
     }, // hacia donde enviamos lo que prepara webpack. tiene un nombre especifico para esto y es dist
     resolve: {
-        extensions: ['.js'] // las extensiones con las que voy a trabajar
+        extensions: ['.js'], // las extensiones con las que voy a trabajar
+        alias: {
+            '@utils': path.resolve(__dirname,'src/utils/'),
+            '@templates': path.resolve(__dirname,'src/templates/'),
+            '@styles': path.resolve(__dirname,'src/styles/'),
+            '@images': path.resolve(__dirname,'src/assets/images/'),
+        }
     },
     module: {
         rules: [
@@ -46,7 +52,7 @@ module.exports = { // exportaremos las configuraciones
                         mimetype: "application/font-woff",
                         name: "[name].[contenthash].[ext]",
                         outputPath: "./assets/fonts/",
-                        publicPath: "./assets/fonts/",
+                        publicPath: "../assets/fonts/",
                         esModule: false,
                     },
                 }
