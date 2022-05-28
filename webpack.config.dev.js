@@ -23,7 +23,7 @@ module.exports = { // exportaremos las configuraciones
         }
     },
     mode: 'development',
-    watch: true,
+    // watch: true, // antes estaba en true
     module: {
         rules: [
             {
@@ -87,4 +87,10 @@ module.exports = { // exportaremos las configuraciones
         }),
         new Dotenv(), // armo la instancia del copiador
     ],
+    devServer: {
+        static: path.join(__dirname,'dist'),
+        compress: true,
+        historyApiFallback: true,
+        port: 3006,
+    }
 }
