@@ -23,6 +23,7 @@ module.exports = { // exportaremos las configuraciones
         }
     },
     mode: 'development',
+    watch: true,
     module: {
         rules: [
             {
