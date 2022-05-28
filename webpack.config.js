@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // llamo al rec
 const CopyPlugin = require('copy-webpack-plugin'); // llamo al plugin para copiar
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 
 module.exports = { // exportaremos las configuraciones
@@ -83,7 +84,8 @@ module.exports = { // exportaremos las configuraciones
                     to: "assets/images" // manda a dist -> assets/images
                 } // en el objeto decimos desde donde y hacia donde se mueve.
             ]
-        }), // armo la instancia del copiador
+        }),
+        new Dotenv(), // armo la instancia del copiador
     ],
     optimization : {
         minimize: true,
