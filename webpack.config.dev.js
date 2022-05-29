@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // llamo al recurso que isntale
 const CopyPlugin = require('copy-webpack-plugin'); // llamo al plugin para copiar
 const Dotenv = require('dotenv-webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
 module.exports = { // exportaremos las configuraciones
@@ -24,6 +24,7 @@ module.exports = { // exportaremos las configuraciones
         }
     },
     mode: 'development',
+    devtool: 'source-map',
     // watch: true, // antes estaba en true
     module: {
         rules: [
