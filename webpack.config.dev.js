@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // llamo al recurso que isntale
 const CopyPlugin = require('copy-webpack-plugin'); // llamo al plugin para copiar
 const Dotenv = require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer');
 
 
 module.exports = { // exportaremos las configuraciones
@@ -86,6 +87,7 @@ module.exports = { // exportaremos las configuraciones
             ]
         }),
         new Dotenv(), // armo la instancia del copiador
+        new BundleAnalyzerPlugin(),
     ],
     devServer: {
         static: path.join(__dirname,'dist'),
